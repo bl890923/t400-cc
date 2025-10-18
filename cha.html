@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Insert title here</title>
+        <link rel="stylesheet" href="/resource/css/content.css" type="text/css"/>
+        <link rel="stylesheet" href="/resource/css/log.css" type="text/css"/>
+        <script type="text/javascript" src="/resource/js/jquery.js"></script>
+        <script type="text/javascript">
+            $().ready(function(){init();initepstype();});
+            //初始化显示数据
+            function init(){
+                var result=$("#showresult");
+                var seg=$('#seg').val();
+                var str="<table><tr><td>号码</td><td>费率</td><td>号码类型</td><td>预占类型</td></tr>";
+                $.ajax({
+                    "url":"getdata.php?type=recommend&seg="+seg,
+                    "type":"get",
+                    "dataType":"json",
+                    "cache":false,
+                    success:function(r){
+                        for(i=0;i<r.length;i++){
+                            str+="<tr><td>"+r[i].eps400+"</td><td>"+r[i].fl+"</td><td>"+r[i].type+"</td><td>"+r[i].occupytype+"</td><tr>";
+                        }
+                        str+="</table>";
+                        $(result).html(str);
+                    }
+                });
+                
+            }
+            function initepstype(){
+                var seg=$('#seg').val();
+                var epstype=$("#epstype");
+                $.ajax({
+                    "url":"getdata.php?type=getepstype", 
+                    "type":"post",
+                    "data":{"seg":seg},
+                    "cache":false,
+                    success:function(r){
+                       $(epstype).html(r);
+                    }
+                });
+            }
+            //处理分页
+            function dopage(a){
+                search(a);
+            }
+            //处理跳转页
+            function gopage(max){
+                var gopage =parseInt($('#jump').val());
+                if(gopage>max){
+                    gopage=max;
+                }else if(gopage<=0){
+                    gopage=1;
+                }
+                dopage(gopage);
+            }
+            
+            //生成整个页面
+            function getepstype(a){
+                var seg=$(a).val();
+                var epstype=$("#epstype");
+                init();
+                $.ajax({
+                    "url":"getdata.php?type=getepstype", 
+                    "type":"post",
+                    "data":{"seg":seg},
+                    "cache":false,
+                    success:function(r){
+                       $(epstype).html(r);
+                    }
+                });
+            }
+            
+            
+            
+            function search(page){
+                var eps400=$("#eps400").val();
+                var occupytype=$("#occupytype").val();
+                var epstype=$("#epstype").val();
+                var fl=$("#fl").val();
+                var pagesize=$("#pagesize").val();
+                var result=$("#showresult");
+                var seg=$("#seg").val();
+                var str="<table><tr><td>号码</td><td>费率</td><td>号码类型</td><td>预占类型</td></tr>";
+                $.ajax({
+                    "url":"getdata.php?type=search",
+                    "type":"post",
+                    "cache":false,
+                    "data":{"eps400":eps400,"occupytype":occupytype,"epstype":epstype,"fl":fl,"pagesize":pagesize,"page":page,"seg":seg},
+                    "dataType":"json",
+                    success:function(r){
+                        $(result).html(r);
+                    
+                        if(r.count>0){
+                            $("#moreinfo").html("查询记录数:"+r.count+"，当前第"+page+"页，共有"+r.pages+"页"+"<button onclick='dopage("+r.pre+")'>上一页</button>"+"<button onclick='dopage("+r.next+")'>下一页</button>"+"<input style='width:25px;' type='text' id='jump'/><button onclick='gopage("+r.pages+")'>go</button>");
+                            r=r.data;
+                            for(i=0;i<r.length;i++){
+                                str+="<tr><td>"+r[i].eps400+"</td><td>"+r[i].fl+"</td><td>"+r[i].type+"</td><td>"+r[i].occupytype+"</td><tr>";
+                            }
+                            str+="</table>";
+                            $(result).html(str);
+                        }else{
+                            $("#moreinfo").html("查无数据");
+                            $(result).html("");
+                        }         
+                    }
+                });
+                return false;
+            }
+            
+            
+        </script>
+    </head>
+    <body>
+        <div class="content">
+            <div class="content-box">
+                <div class="content-box-head">
+                    <h3>选号链接demo</h3>
+                </div>
+                <div class="content-box-content">
+                    <fieldset>
+                        <legend>查询条件</legend>
+                        号段：<select id="seg" onchange="getepstype(this)"><option value="1">4009号段</option><option value="2">4008号段</option><option value="3">4000号段</option><option value="4">4006号段</option></select>
+                        查询号码：<input style="width: 80px;" type="text" id="eps400"/>
+                        号码类型：<select id="epstype"></select>
+                        选号类型：<select id="occupytype"><option value="-1">所有类型</option><option value="1">预开号</option><option value="2">预占号</option><option value="3">可选号</option></select>
+                        费率类型：<select id="fl"><option value="-1">所有费率</option><option value="50000">50000</option><option value="20000">20000</option><option value="3000">3000</option><option value="500">500</option><option value="300">300</option><option value="100">100</option><option value="80">80</option><option value="50">50</option><option value="30">30</option><option value="0">0(单个申请批复)</option></select>
+                        每页条数：<select id="pagesize"><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option></select>
+                        <button onclick="search(1)">查询</button><span id="moreinfo"></span>
+                    </fieldset>
+                    <div id="showresult"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

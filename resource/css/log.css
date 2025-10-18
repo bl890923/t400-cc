@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+#showresult{
+	margin:5px auto;
+}
+table{
+	border-collapse:collapse;
+	margin:5px auto;
+	width:100%;
+}
+td,th{
+	border:1px solid  #e3e199;
+	text-align:center;
+	line-height:25px;
+	font-size:12px;
+}
+
+fieldset{
+	padding:5px;
+	border:1px solid #e3e199;
+}

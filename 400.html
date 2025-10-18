@@ -1,0 +1,882 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>靓号搜索</title>
+<link rel="stylesheet" type="text/css" href="http://4008.t400.cc/resources/plugins/jqueryui/themes/ui-lightness/jquery-ui-1.7.3.custom.css">
+<link rel="stylesheet" type="text/css" href="http://4008.t400.cc/resources/css/style.css">
+<link rel="stylesheet" type="text/css" href="http://4008.t400.cc/resources/css/style-c.css">
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="http://4008.t400.cc/resources/plugins/jqueryui/ui/jquery-ui-1.7.3.custom.js"></script>
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/SubmitForm.js"></script>
+<link rel="stylesheet" type="text/css" href="http://4008.t400.cc/resources/css/jqModal.css">
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/jqModal.js"></script>
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/DataForm.js"></script>
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/jquery.validate.js" ></script>
+<script type="text/javascript" src="http://4008.t400.cc/resources/scripts/searchSelect.js"></script>
+<script type="text/javascript">
+	//分页对象
+	var pageData;
+	//选择的关键词
+	var selectWord;
+	//查询条件
+	var param = {};
+	//分页控件
+	var pageControl;
+	//表格控件
+	var grid;
+	//是否按下分页
+	var isPage;
+	//选中的400号码
+	var Eps400Info;
+	//
+	var rowData;
+	$(function(){
+		loadEps400(param);
+		$('#tabs').tabs();
+		//初始化分页控件
+		pageControl = $('#pageControl');
+		grid = $('#epsList');
+		jQuery.fn.center = function () {
+		    this.css("position","absolute");
+		    this.css("top", ( $(document).height() - this.height()) / 4+$(document).scrollTop() + "px");
+		    this.css("left", ( $(document).width() - this.width() ) / 2+$(document).scrollLeft() + "px");
+		    return this;
+		}
+		$('#info').jqm({overlay: 20});
+		
+	});
+
+	//选择号段
+	function chooseSegment(self,segment) {
+		$('.nomber').removeClass('nomber-choose');
+		self.addClass('nomber-choose');
+
+		//ajax请求加载号码
+		param.segment = segment;
+		param.searchPage = 1;
+		delete param.eps400;
+		loadEps400(param);
+	}
+
+	function loadNum(condition, self) {
+		//给该元素添加
+		if ( selectWord ) {
+			selectWord.css('background', '');
+			selectWord.css('border', '');
+			selectWord.css('color', '');
+		}
+		self.css('background', '#f7f7f7');
+		self.css('border', '1px solid #aaa');
+		self.css('color', '#1C94C4');
+		selectWord = self;
+		//ajax请求加载号码
+		param.condition = condition;
+		param.searchPage = 1;
+		delete param.eps400;
+		loadEps400(param);
+	}
+
+	//查询号码
+	function searchEps400() {
+		$('#search').val($.trim($('#search').val()));
+		var search = $('#search').val();
+		//var eps400 = /^400[\d|*]{7}$/;
+		var eps400 = /^400[\d|_|*]{1,7}$/;
+		if ( eps400.test(search) ) {
+			param = {
+				'eps400':search
+			}
+			loadEps400(param);
+		} else {
+			alert('请输入正确的查询格式！');
+		}
+	}
+
+	
+	function loadEps400(param) {
+		//请求400号码
+		var height = $('#eps').height();
+		$('#mask').height(height+60);
+	    
+		$('#mask').show();
+		$.ajax({
+			  url: 'http://4008.t400.cc/lkszjreo/wqi4rpo/ewirwed/qncyrq/oijoijfkiejnew.aspx?type=epsList',
+			  type: "POST",
+			  data: (param),
+			  success: function(data) {
+				pageData = data;
+				createEpsList(param);
+			  },
+			  dataType: "json"
+		});
+	}
+	
+	function createEpsList(param) {
+		grid.empty();
+		var list = pageData.list;
+		$.each(list, function(i,e){
+			//每个400号码元素
+			grid.append('<li onmouseover="onEpsOver('+e.month_low+', \''+e.open_type+'\', $(this));" onmouseout="onEpsOut();"><a href="javascript:;">'+e.eps400+'</a></li>');
+		});
+		createPageControl();
+		$('#mask').hide();
+	}
+
+
+
+	function onEpsOver(low, open, self) {
+		var position = self.offset();
+	 	
+	 	var mouse_x = parseInt(position.left) - 13;
+	    var mouse_y = parseInt(position.top) + parseInt(self.css('lineHeight'));
+	    
+	    var lowMonth;
+		if(low == 0){
+			lowMonth = '单个申请批复';
+		}else{
+			lowMonth = low+'元/月';
+		}
+
+	    $('#float').css('left', mouse_x+'px');
+	    $('#float').css('top', mouse_y+'px');
+
+
+		$('div#float #min').text(lowMonth);
+		$('div#float #open').text(open);
+		
+	    $('#float').show();
+	}
+	function onEpsOut() {
+		$('#float').hide();
+	}
+	function createPageControl() {
+		$('ul.page_list li:not([name="control"])').remove();
+		var prev = $('#prev');
+		var after = $('#after');
+		var total = pageData.totalPages;
+		var current = pageData.currentPageNo;
+		if ( total>6 ) {//总页数大于6
+			if ( current>=total-3 ) {
+				after.parent().before('<li><a href="javascript:;" name="page" id="1">1</a></li>')
+				after.parent().before('<li>...</li>');
+				for ( var i=total-4; i<=total; i++ ) {
+					after.parent().before('<li><a href="javascript:;" name="page" id="'+i+'">'+i+'</a></li>');
+				}
+			} else if(current<=3) {
+				for ( var i=1; i<6; i++ ) {
+					after.parent().before('<li><a href="javascript:;" name="page" id="'+i+'">'+i+'</a></li>');
+				}
+				after.parent().before('<li>...</li>');
+				after.parent().before('<li><a href="javascript:;" name="page" id="'+total+'">'+total+'</a></li>');
+			} else {
+				after.parent().before('<li><a href="javascript:;" name="page" id="1">1</a></li>')
+				after.parent().before('<li>...</li>');
+				for ( var i=current-1; i<current+3; i++ ) {
+					after.parent().before('<li><a href="javascript:;" name="page" id="'+i+'">'+i+'</a></li>');
+				}
+				after.parent().before('<li>...</li>');
+				after.parent().before('<li><a href="javascript:;" name="page" id="'+total+'">'+total+'</a></li>');
+			}
+		} else {//总页数小于6
+			for ( var i=1; i<=total; i++ ) {
+				after.parent().before('<li><a href="javascript:;" name="page" id="'+i+'">'+i+'</a></li>');
+			}
+		}
+		$('#'+pageData.currentPageNo).addClass('now_page');
+		//选择页码
+		$('ul.page_list li a[name="page"]').bind('click',function(){
+			//ajax请求加载号码
+			var id = $(this).attr('id');
+			if ( id!=pageData.currentPageNo ) {
+				param.searchPage = id;
+				$('a[name="page"]').removeClass('now_page');
+				$(this).addClass('now_page');
+				loadEps400(param);
+			}
+		});
+		//初始化上一页
+		if ( pageData.currentPageNo==total ) {
+			after.unbind('click');
+		} else {
+			after.bind('click', function(){
+				param.searchPage = pageData.currentPageNo+1;
+				loadEps400(param);
+			});
+		}
+		//初始化下一页
+		if ( pageData.currentPageNo==1 ) {
+			prev.unbind('click');
+		} else {
+			prev.bind('click', function(){
+				param.searchPage = pageData.currentPageNo-1;
+				loadEps400(param);
+			});
+		}
+	}
+	
+	//代理商删除检测
+	function proxyInputChange(){
+		if ( $("#occupy_proxy_name").val() == rowData.proxy_name ){
+			$("#occupy_proxy_id").val(rowData.proxy_id);
+		} else {
+			$("#occupy_proxy_id").val("");
+		}
+	}
+	function checkForm(){
+		 if($("#flag").val() == 1){
+			if(window.confirm("该号段为浙江省专属号段，只支持浙江客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else if($("#flag").val() == 2){
+			if(window.confirm("该号段为江苏省专属号段，只支持江苏客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else if($("#flag").val() == 3){
+			if(window.confirm("该号段为北京专属号段，只支持北京客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else if($("#flag").val() == 4){
+			if(window.confirm("该号段为上海专属号段，只支持上海客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else if($("#flag").val() == 5){
+			if(window.confirm("该号段为广东省专属号段，只支持广东客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else if($("#flag").val() == 6){
+			if(window.confirm("该号段为福建省专属号段，只支持福建客户申请开通，确认是否提交预占申请？")){
+				epsOccupy();
+			}
+		}else{
+			epsOccupy();
+		}
+	}
+	
+	//预占400号码
+	function epsOccupy(){
+		if($("#query_proxy").val()==""){
+			$("#errMsg").html("请选择代理商!");
+			return;
+		}
+		$.ajax({
+				  url: 'epsNumChoose_occupyNum',
+				  type: "POST",
+				  data: ({
+					  'eps400Num':$("#eps400Num").val(),
+					  'proxyId':$("#occupy_proxy_id").val(),
+					  'remark':$("#remark").val()
+				  }),
+				  success: function(data) {
+					  alert(data.tip);
+					  $('#info').jqmHide();
+					  if (data.success) {
+						  loadEps400(param);
+					  }
+				  },
+				  dataType: "json"
+			});
+	}
+</script>
+</head>
+<body>
+<div class="content">
+	<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><input id="search" class="search_text" onMouseOver="if($(this).val()=='示例：400*788*，或 400___788_') { $(this).val(''); $(this).focus(); }" onMouseOut="if($(this).val().length <= 0) {$(this).val('示例：400*788*，或 400___788_');} " class="input3" value="示例：400*788*，或 400___788_" style="vertical-align:middle;" title="_代替1位数字，*代替任意位数字"http://4008.t400.cc/></td>
+			<td><input class="search_but" type="button" onclick="searchEps400();"http://4008.t400.cc/></td>
+		</tr>
+	</table>
+	<div id="tabs" class="margin_top">
+		<ul>
+			
+				<li><a href="#tabs-1">常见数据</a></li>
+			
+				<li><a href="#tabs-2">行业谐音</a></li>
+			
+				<li><a href="#tabs-3">乘法口诀</a></li>
+			
+				<li><a href="#tabs-4">区号</a></li>
+			
+				<li><a href="#tabs-5">年份</a></li>
+			
+				<li><a href="#tabs-6">畅销尾数号段</a></li>
+			
+			
+		</ul>
+		
+			<div id="tabs-1">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">紧急热线</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****110',$(this));" class="taocan">110</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****114',$(this));" class="taocan">114</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****119',$(this));" class="taocan">119</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****120',$(this));" class="taocan">120</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****122',$(this));" class="taocan">122</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">常见手机号段</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****130',$(this));" class="taocan">130</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****138',$(this));" class="taocan">138</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****139',$(this));" class="taocan">139</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****180',$(this));" class="taocan">180</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****186',$(this));" class="taocan">186</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">服务热线</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****315',$(this));" class="taocan">315</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****360',$(this));" class="taocan">360</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****365',$(this));" class="taocan">365</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">号码类型</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400[01689](0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9))(\d)(?:0(?=\d{2}1)|1(?=\d{2}2)|2(?=\d{2}3)|3(?=\d{2}4)|4(?=\d{2}5)|5(?=\d{2}6)|6(?=\d{2}7)|7(?=\d{2}8)|8(?=\d{2}9))\1\2\d',$(this));" class="taocan">400*-ABC-ABD</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400[01689](\d)(?:0(?=\d{2}1)|1(?=\d{2}2)|2(?=\d{2}3)|3(?=\d{2}4)|4(?=\d{2}5)|5(?=\d{2}6)|6(?=\d{2}7)|7(?=\d{2}8)|8(?=\d{2}9))(\d)\1\d\2',$(this));" class="taocan">400*-ABD-ACD</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400[01689](?:0(?=\d{2}1)|1(?=\d{2}2)|2(?=\d{2}3)|3(?=\d{2}4)|4(?=\d{2}5)|5(?=\d{2}6)|6(?=\d{2}7)|7(?=\d{2}8)|8(?=\d{2}9))(\d)([^\\1])\d\1\2',$(this));" class="taocan">400*-ACD-BCD</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+			<div id="tabs-2">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">服务行业</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****108',$(this));" class="taocan">108(要您发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****580',$(this));" class="taocan">580(我帮您)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****885',$(this));" class="taocan">885(帮帮我)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***6580',$(this));" class="taocan">6580(让我帮您)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***9580',$(this));" class="taocan">9580(找我帮您)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">普通行业</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****158',$(this));" class="taocan">158(要我发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****168',$(this));" class="taocan">168(一路发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****668',$(this));" class="taocan">668(路路发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****179',$(this));" class="taocan">179(要吃酒)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****518',$(this));" class="taocan">518(我要发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****729',$(this));" class="taocan">729(去喝酒)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****918',$(this));" class="taocan">918(就要发)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***1290',$(this));" class="taocan">1290(一按就灵)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***1399',$(this));" class="taocan">1399(一生久久)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***1615',$(this));" class="taocan">1615(一路有我)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***1890',$(this));" class="taocan">1890(一拨就灵)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***7731',$(this));" class="taocan">7731(心心相印)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">医疗保健</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****189',$(this));" class="taocan">189(要保健)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5189',$(this));" class="taocan">5189(我要保健)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">教育培训</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****291',$(this));" class="taocan">291(爱教育)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****578',$(this));" class="taocan">578(补习班)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5164',$(this));" class="taocan">5164(我要老师)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5291',$(this));" class="taocan">5291(我爱教育)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***9191',$(this));" class="taocan">9191(就要教育)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">食品餐饮</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****517',$(this));" class="taocan">517(我要吃)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****527',$(this));" class="taocan">527(我爱吃)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400**5917',$(this));" class="taocan">5917(我就要吃)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">婚庆交友</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****520',$(this));" class="taocan">520(我爱你)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***1314',$(this));" class="taocan">1314(一生一世)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2013',$(this));" class="taocan">2013(爱你一生)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2020',$(this));" class="taocan">2020(爱你爱你)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">旅游</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400***5161',$(this));" class="taocan">5161(我要旅游)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5261',$(this));" class="taocan">5261(我爱旅游)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***6161',$(this));" class="taocan">6161(旅游旅游)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">珠宝行业</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400***7319',$(this));" class="taocan">7319(天长地久)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+			<div id="tabs-3">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">乘法口诀</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400***2510',$(this));" class="taocan">二五一十</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2612',$(this));" class="taocan">二六一十二</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2816',$(this));" class="taocan">二八一十六</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2918',$(this));" class="taocan">二九一十八</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***3515',$(this));" class="taocan">三五一十五</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***2618',$(this));" class="taocan">三六一十八</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***3721',$(this));" class="taocan">三七二十一</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***3927',$(this));" class="taocan">三九二十七</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5525',$(this));" class="taocan">五五二十五</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5630',$(this));" class="taocan">五六三十</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***5735',$(this));" class="taocan">五七三十五</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***6636',$(this));" class="taocan">六六三十六</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***7856',$(this));" class="taocan">七八五十六</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***7963',$(this));" class="taocan">七九六十三</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***8972',$(this));" class="taocan">八九七十二</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***9981',$(this));" class="taocan">九九八十一</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+			<div id="tabs-4">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">区号</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****010',$(this));" class="taocan">010(北京)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****020',$(this));" class="taocan">020(广州)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****021',$(this));" class="taocan">021(上海)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****022',$(this));" class="taocan">022(天津)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****023',$(this));" class="taocan">023(重庆)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****024',$(this));" class="taocan">024(沈阳)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****025',$(this));" class="taocan">025(南京)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****027',$(this));" class="taocan">027(武汉)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****028',$(this));" class="taocan">028(成都)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****029',$(this));" class="taocan">029(西安)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***031*',$(this));" class="taocan">031*(河北)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***035*',$(this));" class="taocan">035*(山西)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***037*',$(this));" class="taocan">037*(河南)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***041*',$(this));" class="taocan">041*(辽宁)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***043*',$(this));" class="taocan">043*(吉林)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***045*',$(this));" class="taocan">045*(黑龙江)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***047*',$(this));" class="taocan">047*(内蒙古)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***051*',$(this));" class="taocan">051*(江苏)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***053*',$(this));" class="taocan">053*(山东)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***055*',$(this));" class="taocan">055*(安徽)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***057*',$(this));" class="taocan">057*(浙江)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***059*',$(this));" class="taocan">059*(福建)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***071*',$(this));" class="taocan">071*(湖北)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***073*',$(this));" class="taocan">073*(湖南)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***075*',$(this));" class="taocan">075*(广东)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***077*',$(this));" class="taocan">077*(广西)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***079*',$(this));" class="taocan">079*(江西)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***081*',$(this));" class="taocan">081*(四川)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***051*',$(this));" class="taocan">085*(贵州)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***089*',$(this));" class="taocan">089*(西藏)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***091*',$(this));" class="taocan">091*(陕西)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***093*',$(this));" class="taocan">093*(甘肃)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***095*',$(this));" class="taocan">095*(宁夏)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***097*',$(this));" class="taocan">097*(青海)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***099*',$(this));" class="taocan">099*(新疆)</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***087*',$(this));" class="taocan">087*(云南)</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+			<div id="tabs-5">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">年份</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400***196*',$(this));" class="taocan">196*</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***197*',$(this));" class="taocan">197*</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***198*',$(this));" class="taocan">198*</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***199*',$(this));" class="taocan">199*</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***200*',$(this));" class="taocan">200*</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400***201*',$(this));" class="taocan">201*</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+			<div id="tabs-6">
+				<table border="0" cellpadding="0" cellspacing="0" width="60%;">
+					<tr>
+						<td height="30" align="right" width="125px"><span class="title_b">号段</span></td>
+						<td width="30px"></td>
+						
+						<td><a href="javascript:;" onclick="chooseSegment($(this), -1);" class="nomber">全 部</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 3);" class="nomber">4008</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 4);" class="nomber">4009</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 2);" class="nomber">4000</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 1);" class="nomber">4006</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 5);" class="nomber">4001</a></td>
+						<td><a href="javascript:;" onclick="chooseSegment($(this), 6);" class="nomber">4007</a></td>
+						
+						
+					</tr>
+				</table>
+				<div class="line margin_top"></div>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%;" class="margin_top">
+					
+						<tr>
+							<td height="30" align="right" valign="top" width="125px"><span class="title_b">畅销尾数号段</span></td>
+							<td width="30px"></td>
+							<td>
+								<div class="marginfu">
+								
+									<a href="javascript:;" onclick="loadNum('400****114',$(this));" class="taocan">114</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****899',$(this));" class="taocan">899</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****001',$(this));" class="taocan">001</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****006',$(this));" class="taocan">006</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****008',$(this));" class="taocan">008</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****100',$(this));" class="taocan">100</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****400',$(this));" class="taocan">400</a> |
+								
+									<a href="javascript:;" onclick="loadNum('400****800',$(this));" class="taocan">800</a> |
+								
+								</div>
+							</td>
+						</tr>
+					
+				</table>
+			</div>
+		
+	</div>
+	<div id="eps" class="list_number margin_top">
+		<ul id="epsList" class="list_number_ul">
+		</ul>
+		<div class="clear"></div>
+		<div class="page" >
+			<ul id="pageControl" class="page_list">
+				<li name="control"><a href="javascript:;" id="prev"><</a></li>
+				<li name="control"><a href="javascript:;" id="after">></a></li>
+			</ul>
+		</div>
+		<div id="mask" class="mask" style="display: none;">
+			<div id="loading" class="loading" ><img src="http://4008.t400.cc/resources/images/loading-c.gif" /> 正在查询，请稍候...</div>
+		</div>
+	</div>
+</div>
+<!-- 弹出框-->
+<div id="info" class="no_view" style="display: none;width: 550px;padding: 10px;">
+	正在加载数据请稍等...
+</div>
+<div id="float" class="click_out" style="display: none;">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td height="20" align="right">最低消费：</td>
+			<td align="left"><font id="min"></font></td>
+		</tr>
+		<tr>
+			<td height="20" align="right">开通类型：</td>
+			<td align="left"><font id="open"></font></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

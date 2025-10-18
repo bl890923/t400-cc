@@ -1,0 +1,1234 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+body {
+    width: 10rem;
+    min-width: 320px;
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #fff !important;
+    font-family: Arial, Helvetica;
+}
+
+
+/* 标题 */
+
+.slogan {
+    font-size: 0.4rem;
+    font-weight: 700;
+    font-family: "微软雅黑";
+}
+
+.slogan b {
+    color: #999;
+    padding-right: 0.066667rem;
+}
+
+.mt40 {
+    margin-top: 0.533333rem;
+}
+
+.mt25 {
+    margin-top: -25% !important;
+}
+
+.white {
+    color: #fff;
+}
+
+.red {
+    color: #D92D23;
+    background-color: #D92D23;
+}
+
+.red1 {
+    color: #fff;
+    background-color: #B40909;
+}
+
+.fen {
+    color: #D92D23;
+    background-color: #FFD0D0;
+}
+
+.blue {
+    color: #004DA1;
+    background-color: #004DA1;
+}
+
+.blue1 {
+    color: #fff;
+    background-color: #10447B;
+}
+
+.lan {
+    color: #004DA1;
+    background-color: #D0E2FF;
+}
+
+.green {
+    color: #81C60D;
+    background-color: #81C60D;
+}
+
+.green1 {
+    color: #fff;
+    background-color: #75B10E;
+}
+
+.lu {
+    color: #81C70D;
+    background-color: #EDFFD0;
+}
+
+.yellow {
+    color: #FF8101;
+    background-color: #FFF6D0;
+}
+
+.juse {
+    color: #E75149;
+    background-color: #FFE972;
+}
+
+.mt85 {
+    margin-top: 1.133333rem;
+}
+
+
+/* 侧导航 */
+
+.nav_menu {
+    width: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    z-index: 99999;
+    overflow: scroll;
+    background: #fff;
+}
+
+.nav_menu img {
+    display: block;
+    width: 62%;
+}
+
+.nav_menu .top {
+    width: 100%;
+    padding-top: .297rem;
+    padding-bottom: .25rem;
+}
+
+.nav_menu .Navlog {
+    width: 54%;
+    display: block;
+    margin-left: 4%;
+}
+
+.nav_menu .btn {
+    display: block;
+    width: 12%;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+}
+
+.nav_menu ul {
+    overflow: hidden;
+    width: 100%;
+    overflow: scroll;
+    height: 80%;
+}
+
+.nav_menu li {
+    width: 100%;
+    overflow: hidden;
+    background: url(../images/nav_icon01.png) no-repeat 89% center;
+    height: 1.2rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.nav_menu li:first-child {
+    border-top: 0.013333rem solid #eaeaea;
+}
+
+.nav_menu li p>a {
+    color: #333333;
+    font-size: .375rem;
+    display: block;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    box-sizing: border-box;
+    padding-left: 6%;
+}
+
+
+/* 头部 */
+
+
+/* 头部 */
+
+.header {
+    margin: 0 0.266667rem;
+}
+
+.header-box {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 0.266667rem 0;
+}
+
+.header-box .header-left img {
+    display: line-block;
+    width: 100%;
+}
+
+.header-box .header-left img:nth-child(1) {
+    display: line-block;
+    width: 100%;
+}
+
+.header-box .header-right img {
+    display: line-block;
+    width: 0.8rem;
+    height: 0.586667rem;
+}
+
+
+/* 轮播 */
+
+.swiper-container {
+    width: 100%;
+}
+
+.swiper-container .swiper-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-container .swiper-wrapper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+}
+
+.chaxun {
+    position: relative;
+    width: 100%;
+    height: 1.706667rem;
+    background: url(../images/chaxun.png);
+    background-size: cover;
+}
+
+.chaxun a {
+    position: absolute;
+    right: 0.666667rem;
+    bottom: 10%;
+    display: block;
+    width: 2rem;
+    height: 0.706667rem;
+    line-height: 0.706667rem;
+    font-size: 0.28rem;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.2rem;
+    background-color: #3583D5;
+}
+
+
+/* 特色功能 */
+
+.tese {
+    margin-top: 0.4rem;
+    margin: 0 0.266667rem;
+}
+
+.test-box .tese-top {
+    position: relative;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    line-height: 0.4rem;
+    padding-bottom: 0.133333rem;
+    border-bottom: 0.026667rem solid #eee;
+}
+
+.tese-top .tese-top-left h1 {
+    display: inline;
+    font-size: 0.266667rem;
+    color: #3583D5;
+}
+
+.gang {
+    position: absolute;
+    left: 0;
+    bottom: -5%;
+    width: 1.533333rem;
+    height: 0.053333rem;
+    background-color: #3583D5;
+}
+
+.tese-top .tese-top-left span {
+    padding-left: 0.32rem;
+    color: #999;
+    font-size: 0.16rem;
+}
+
+.tese-top a {
+    font-size: 0.24rem;
+    color: #999;
+}
+
+.tese-top a>span {
+    color: #3583D5;
+}
+
+.test-box .tese-bottom ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding-top: 0.4rem;
+}
+
+.test-box .tese-bottom ul li {
+    width: 17%;
+}
+
+.tese-bottom ul li img {
+    display: block;
+    width: 100%;
+}
+
+
+/* 今日特惠 */
+
+.tehui {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.tehui-top .tehui-top-shang {
+    position: relative;
+    height: 1.493333rem;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.tehui-top .tehui-top-shang .boxa {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -0.2rem;
+    margin-right: 0.533333rem;
+    width: 1.773333rem;
+    height: 0.413333rem;
+    border-radius: 0.133333rem;
+    line-height: 0.413333rem;
+    font-size: 0.213333rem;
+    text-align: center;
+}
+
+.tehui-top .tehui-top-shang .logo {
+    position: relative;
+    width: 2.533333rem;
+}
+
+.tehui-top .tehui-top-shang .logo img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -12%;
+    margin-left: 0.16rem;
+    width: 2.226667rem;
+    display: block;
+}
+
+.tehui-top .tehui-top-shang .tc {
+    font-size: 0.266667rem;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    line-height: 1.493333rem;
+}
+
+.tehui-top .tehui-top-shang .box a {
+    margin: auto;
+    display: block;
+    width: 1.773333rem;
+    height: 0.4rem;
+    border-radius: 0.133333rem;
+    line-height: 0.4rem;
+    text-align: center;
+    font-size: 0.213333rem;
+    margin-top: 0.24rem;
+    margin-right: 0.533333rem;
+}
+
+.tehui-top .tehui-top-shang img {
+    width: 100%;
+    display: block;
+}
+
+.tehui-top .tehui-top-xia ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    flex-wrap: wrap;
+    border: 0.013333rem solid #e3e3e3;
+    border-right: none;
+    border-bottom: none;
+}
+
+.tehui-top .tehui-top-xia ul li {
+    box-sizing: border-box;
+    width: 33.333%;
+    height: 1.2rem;
+    border-bottom: 0.013333rem solid #e3e3e3;
+    border-right: 0.013333rem solid #e3e3e3;
+}
+
+.tehui-top .tehui-top-xia ul li a {
+    display: block;
+    box-sizing: border-box;
+    color: #555;
+    text-align: center;
+}
+
+.tehui-top .tehui-top-xia ul li a>span {
+    display: block;
+    font-size: 0.32rem;
+    font-weight: 700;
+    line-height: 0.533333rem;
+    padding-top: 5%;
+}
+
+.tehui-top .tehui-top-xia ul li a p {
+    font-size: 0.16rem;
+}
+
+.tehui-top .tehui-top-xia ul li a p>b {
+    font-size: 0.266667rem;
+    color: #FC8200;
+    font-weight: 700;
+    padding-right: 0.04rem;
+}
+
+.tehui-top .tehui-top-xia ul li a p>img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.tehui-top .tehui-top-xia ul li a p>span {
+    font-size: 0.16rem;
+    color: #404040;
+    display: inline-block;
+    line-height: 0.333333rem;
+    padding-left: 0.053333rem;
+    text-decoration: line-through;
+}
+
+.tehuiimg {
+    width: 0.52rem;
+    height: 0.24rem;
+    padding-right: 0.066667rem;
+}
+
+.tehui .tehui-bottom {
+    width: 100%;
+    margin-left: 0.266667rem;
+}
+
+.tehui-bottom h1 {
+    font-size: 0.4rem;
+    color: #0B63B5;
+}
+
+.tehui-bottom img {
+    width: 100%;
+    display: block;
+    margin-top: 0.2rem;
+}
+
+.tehui-bottom h5 {
+    margin-top: 0.2rem;
+}
+
+.tehui-bottom h5 p {
+    color: #666;
+    font-size: 0.106667rem;
+    font-weight: 200;
+    line-height: 0.4rem;
+}
+
+.tehui-bottom p b {
+    font-weight: 700;
+    color: #555;
+    font-size: 0.266667rem !important;
+}
+
+.tehui-bottom a {
+    display: inline-block;
+    width: 1.6rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    color: #fff;
+    font-size: 0.08rem !important;
+    text-align: center;
+    font-weight: 300;
+    margin-right: 0.2rem;
+    margin-top: 0.2rem;
+}
+
+
+/* 01 金牌服务商 */
+
+.jpfw {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+
+/* 
+.jpfw img {
+    width: 100%;
+    display: block;
+    vertical-align: bottom;
+    padding-top: 0.533333rem;
+} */
+
+.jpfw ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    /* height: 0.8rem; */
+}
+
+.jpfw ul li {
+    width: 30%;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+}
+
+.jpfw ul li img {
+    position: relative;
+    top: 50%;
+    margin-top: -0.2rem;
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
+    padding-right: 0.2rem;
+    /* vertical-align: bottom; */
+}
+
+.jpfw ul li .jpfw-font b {
+    font-size: 0.186667rem;
+    color: #212121;
+}
+
+.jpfw ul li .jpfw-font p {
+    font-size: 0.093333rem;
+    color: #9da1a7;
+    padding-top: 0.066667rem;
+}
+
+
+/* 02 行业唯一可实现以下服务 */
+
+.weiyi {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.weiyi ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.weiyi ul li {
+    width: 30%;
+    color: #999;
+    text-align: center;
+}
+
+.weiyi ul li img {
+    display: block;
+    margin: 0.533333rem auto 0.2rem auto;
+    width: 1.026667rem;
+    height: 0.826667rem;
+}
+
+.weiyi ul li h6 {
+    font-size: 0.213333rem;
+    padding-bottom: 0.133333rem;
+}
+
+.weiyi ul li p {
+    font-size: 0.16rem;
+    line-height: 0.293333rem;
+}
+
+
+/* 号码推荐 */
+
+.tuijian {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.tuijianimg {
+    width: 0.24rem;
+    height: 0.24rem;
+    padding-top: 0.04rem;
+    padding-right: 0.04rem;
+}
+
+.xiangouimg {
+    width: 0.68rem;
+    height: 0.306667rem;
+    padding-right: 0.066667rem;
+}
+
+.tuijian .box1 {
+    height: 0.533333rem;
+    line-height: 0.533333rem;
+    font-size: 0.24rem;
+    text-align: center;
+}
+
+.tuijian .box1 ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+}
+
+.tuijian .box1 ul li {
+    -webkit-flex: 1;
+    /* Chrome */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+}
+
+.tuijian .box1 ul li:nth-child(2) {
+    border-left: 0.013333rem solid #fff;
+    border-right: 0.013333rem solid #fff;
+}
+
+
+/* 06 本期推荐套餐 */
+
+.taocan {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+
+/* 07 特色功能 */
+
+.gongneng {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.gongneng ul {
+    border: 0.013333rem solid #e3e3e3;
+    border-right: none;
+    border-bottom: none;
+    margin-top: 0.533333rem;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    flex-wrap: wrap;
+}
+
+.gongneng ul li {
+    width: 33.333%;
+    box-sizing: border-box;
+    border-bottom: 0.013333rem solid #e3e3e3;
+    border-right: 0.013333rem solid #e3e3e3;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 0.44rem 0;
+}
+
+.gongneng ul li img {
+    display: inline-block;
+    width: 0.666667rem;
+    height: 0.666667rem;
+    padding-right: 0.133333rem;
+}
+
+.gongneng ul li .font>b {
+    font-size: 0.2rem;
+    color: #000;
+    margin-bottom: 0.04rem;
+    display: block;
+    font-weight: 100;
+}
+
+.gongneng ul li .font>span {
+    color: #999;
+    font-size: 0.16rem;
+    text-decoration: line-through;
+}
+
+.gongneng ul li .font>p {
+    color: #222;
+    font-size: 0.16rem;
+}
+
+
+/* 08 办理流程 */
+
+.liucheng {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.liucheng ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.liucheng ul li {
+    -webkit-flex: 1;
+    /* Chrome */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+    /* width: 20%; */
+    margin-right: 3%;
+}
+
+.liucheng ul li:nth-child(4) {
+    margin-right: 0;
+}
+
+.liucheng li dl dt {
+    position: relative;
+    font-size: 0.213333rem;
+    color: #317DE6;
+    text-align: center;
+}
+
+.liucheng li dl dt span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 0.32rem;
+    height: 0.32rem;
+    border-radius: 50%;
+    line-height: 0.32rem;
+    color: #fff;
+    font-size: 0.213333rem;
+    font-weight: 700;
+    background-color: #317DE7;
+}
+
+.liucheng dl dd {
+    font-size: 0.16rem;
+    color: #555;
+    line-height: 0.4rem;
+    padding-top: 0.266667rem;
+}
+
+
+/* 09 所需材料 */
+
+.cailiao {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.cailiao img {
+    width: 100%;
+    display: block;
+}
+
+.footer {
+    margin-top: 0.533333rem;
+    margin-bottom: 1.466667rem;
+    color: #353535;
+    font-size: 0.16rem;
+    padding-top: 0.266667rem;
+    background-color: #F2F2F2;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.footer .footer-left {
+    -webkit-flex: 1;
+    /* Chrome */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+    margin-left: 0.666667rem;
+    padding-bottom: 0.4rem;
+    line-height: 0.4rem;
+}
+
+.footer .footer-right {
+    padding-left: 1.333333rem;
+    margin-right: 0.666667rem;
+    -webkit-flex: 1;
+    /* Chrome */
+    -ms-flex: 1;
+    /* IE 10 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    flex: 1;
+    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+}
+
+.footer .footer-right p a {
+    line-height: 0.4rem;
+    color: #353535;
+}
+
+.footer-right-bottom {
+    padding-top: 0.333333rem;
+    font-size: 0.16rem;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.footer-right-bottom span {
+    display: block;
+    font-size: 0.266667rem;
+    color: #FB520F;
+    font-weight: 500;
+    padding-top: 0.04rem;
+}
+
+footer {
+    width: 100%;
+    height: 1.466667rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #212121;
+}
+
+footer ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+footer ul li {
+    width: 25%;
+    text-align: center;
+}
+
+footer ul li img {
+    display: block;
+    width: 0.666667rem;
+    height: 0.666667rem;
+    margin: 0 auto;
+    margin-top: 6%;
+}
+
+footer ul li p {
+    padding-top: 2%;
+    font-size: 0.266667rem;
+    text-align: center;
+}
+
+footer ul li a {
+    color: #fff;
+}
+
+.banner img {
+    display: block;
+    width: 100%;
+}
+
+
+/* 新闻列表 */
+
+.news {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+}
+
+.news .news-lis ul li {
+    box-sizing: border-box;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    font-size: 0.266667rem;
+    color: #317DE6;
+    background-color: #f7f7f7;
+    margin-top: 0.266667rem;
+    padding: 0 0.266667rem;
+}
+
+.news-lis>ul li .news-left a {
+    color: #317DE6;
+}
+
+.pageBox {
+    margin-top: 0.4rem !important;
+    text-align: center;
+    font: bold 0.186667rem/0.453333rem arial;
+}
+
+.pageBox ul {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.pageBox ul li {
+    margin: 0 0.066667rem;
+}
+
+.pageBox a {
+    border: 0.013333rem solid #ddd;
+    display: inline-block;
+    margin: 0 0.053333rem;
+    color: #707070;
+    height: 0.453333rem;
+    padding: 0 0.2rem;
+}
+
+.pageBox a:hover,
+.pageBox a:active {
+    background: #3aa9f2;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.pageBox .cur {
+    background: #3aa9f2;
+    border: 0.013333rem solid #3aa9f2;
+    text-decoration: none;
+}
+
+.pageBox a.cur {
+    font-weight: 700;
+    color: #fff;
+}
+
+
+/* 新闻内容页 */
+
+.news-pages .title {
+    margin-top: 0.266667rem;
+    font-size: 0.266667rem;
+    color: #317DE6;
+    text-align: center;
+}
+
+.news-pages .time {
+    padding: 0.266667rem;
+    font-size: 0.213333rem;
+    color: #317DE6;
+    text-align: center;
+}
+
+.news-pages .pages-content {
+    font-size: 0.24rem;
+    line-height: 0.4rem;
+    color: #212121;
+}
+
+.news-pages .news-content img {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+.news-pages .pages-fy {
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 0.533333rem 0;
+}
+
+.news-pages .pages-fy a {
+    display: block;
+    width: 1.6rem;
+    height: 0.533333rem;
+    line-height: 0.533333rem;
+    font-size: 0.266667rem;
+    text-align: center;
+    color: #fff;
+    background-color: #317DE7;
+}
+
+
+/* 图文列表 */
+
+.img-lis {
+    margin: 0 0.266667rem;
+    margin-top: 0.533333rem;
+    display: -webkit-box;
+    /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;
+    /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;
+    /* 混合版本语法: IE 10 */
+    display: -webkit-flex;
+    /* 新版本语法: Chrome 21+ */
+    display: flex;
+    /* 新版本语法: Opera 12.1, Firefox 22+ */
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.img-lis-box {
+    width: 30%;
+}
+
+.img-lis-box img {
+    display: block;
+    width: 100%;
+}
+
+.img-lis-box p {
+    padding: 0.266667rem 0;
+    font-size: 0.266667rem;
+    color: #212121;
+    text-align: center;
+}

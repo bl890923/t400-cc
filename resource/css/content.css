@@ -1,0 +1,156 @@
+/*
+ Document   : content
+ Created on : 2012-5-9, 10:38:40
+ Author     : shenwt
+ Description:
+ Purpose of the stylesheet follows.
+ */ * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 12px;
+    font-family: '微软雅黑';
+    background: #fff;
+}
+
+.content {
+    margin: 2px auto;
+    padding: 0 3px;
+    clear: both;
+}
+
+.content-box {
+    border: 1px #e3e199 solid;
+}
+
+h3 {
+    font-size: 17px;
+    float: left;
+    padding: 10px 15px 10px;
+}
+
+.content-box-head {
+    background: url("/Public/img/bg-content-box.gif") repeat-x scroll left top #E5E5E5;
+    height: 40px;
+    margin-top: 1px;
+}
+.tips{
+	line-height:24px;
+}
+.tips p{
+	text-indent:2em;
+	clear:both;
+}
+.content-box-content {
+    padding: 5px 10px;
+}
+
+.oper {
+    padding: 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #ff8040;
+}
+
+a:hover {
+    font-style: italic;
+}
+
+.title {
+    display: block;
+    clear: both;
+}
+
+.h3 {
+    font-weight: bold;
+    display: inline-block;
+    width: 100px;
+}
+
+ul {
+    list-style: none;
+    padding: 5px 10px;
+    clear: both;
+    overflow: hidden;
+}
+
+ul li {
+    float: left;
+    padding: 4px;
+}
+
+textarea {
+    width: 99%
+}
+
+.main {
+    clear: both;
+}
+
+p {
+    text-indent: 2em;
+    font-size: 13px;
+}
+
+small {
+    padding: 0 10px;
+    display: inline-block;
+    text-align: right;
+}
+
+.notice {
+    border: 1px solid #f3f2d3;
+    margin: 5px 0;
+    padding: 2px 5px;
+    line-height: 22px;
+}
+
+input, select, label {
+    display: inline-block;
+    padding: 3px 2px;
+}
+
+.input {
+    display: block;
+    margin: 5px 0;
+}
+
+.short_input{
+    width: 50px;
+}
+
+.short-text{
+	width:30px;
+}
+.mid_input,.mid-text {
+    width: 146px;
+}
+
+label {
+    width: 70px;
+}
+
+
+#tips{
+	width:320px;
+	display:inline-block;
+	text-align:center;
+}
+.warnning{
+	color:red;
+}
+.ok{
+	color:green;
+}
+small{
+	font-size:11px;
+}
+
+.red{
+	color:red;
+}
+
