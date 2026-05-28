@@ -73,7 +73,7 @@ document.writeln("                </div>               ");
 document.writeln("                <hr>");
 document.writeln("                <div class=\"phoneserver\">");
 document.writeln("                    <h5>&#x5BA2;&#x6237;&#x670D;&#x52A1;&#x70ED;&#x7EBF;</h5>");
-document.writeln("                    <p>400-028-1238</p>");
+document.writeln("                    <p>400-999-0004</p>");
 document.writeln("                </div>");
 document.writeln("                <hr>");
 document.writeln("                <div class=\"msgserver\">");

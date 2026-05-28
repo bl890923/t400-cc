@@ -73,7 +73,7 @@ document.writeln("                </div>               ");
 document.writeln("                <hr>");
 document.writeln("                <div class=\"phoneserver\">");
 document.writeln("                    <h5>客户服务热线</h5>");
-document.writeln("                    <p>400-028-1238</p>");
+document.writeln("                    <p>400-999-0004</p>");
 document.writeln("                </div>");
 document.writeln("                <hr>");
 document.writeln("                <div class=\"msgserver\">");
